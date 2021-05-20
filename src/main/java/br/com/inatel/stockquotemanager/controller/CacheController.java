@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.inatel.stockquotemanager.service.StockServices;
 
 @RestController
-@RequestMapping("/cache")
+@RequestMapping("/stockcache")
 public class CacheController {
 
 	Logger log = LoggerFactory.getLogger(StocksController.class);
