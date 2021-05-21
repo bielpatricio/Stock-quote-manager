@@ -13,10 +13,15 @@ import br.com.inatel.stockquotemanager.repository.QuotesRepository;
 
 @Service
 public class QuoteService {
-	@Autowired
+
 	QuotesRepository quotesRepository;
 
 	Logger log = LoggerFactory.getLogger(StocksController.class);
+
+	@Autowired
+	public QuoteService(QuotesRepository quotesRepository) {
+		this.quotesRepository = quotesRepository;
+	}
 
 	public void quoteSave(List<Quotes> quotes) {
 
@@ -24,6 +29,7 @@ public class QuoteService {
 	}
 
 	public List<Quotes> findByStockId(String id) {
+
 		return quotesRepository.findByStockId(id);
 	}
 

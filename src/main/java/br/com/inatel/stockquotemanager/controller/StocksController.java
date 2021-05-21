@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,12 +41,12 @@ public class StocksController {
 	Logger log = LoggerFactory.getLogger(StocksController.class);
 
 	@GetMapping("/{id}")
-	public ResponseEntity<StockDto> listById(@PathVariable("id") String id) {
+	public ResponseEntity<?> listById(@PathVariable String id) {
 		log.debug("Request {}", id);
 		List<Quotes> quotes = quoteService.findByStockId(id);
 		if (quotes.isEmpty()) {
 			log.debug("Stock's name error");
-			return ResponseEntity.notFound().build();
+			return ((BodyBuilder) ResponseEntity.notFound()).body("Stock's name error");
 		}
 		return ResponseEntity.ok(new StockDto(id, quotes));
 	}
@@ -63,13 +64,13 @@ public class StocksController {
 	}
 
 	@PostMapping
-	public ResponseEntity<StockDto> posting(@RequestBody @Valid StockQuoteForm form,
+	public ResponseEntity<?> posting(@RequestBody @Valid StockQuoteForm form,
 			UriComponentsBuilder uriComponentsBuilder) {
 
 		StockApiDto stockApiDto = stockServices.getById(form.getId());
 		if (stockApiDto == null) {
 			log.debug("Stock's name error");
-			return ResponseEntity.notFound().build();
+			return ((BodyBuilder) ResponseEntity.notFound()).body("Stock's name error");
 		}
 
 		quoteService.quoteSave(form.convert());

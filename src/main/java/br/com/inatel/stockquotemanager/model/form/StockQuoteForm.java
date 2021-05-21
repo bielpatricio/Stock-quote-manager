@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 import br.com.inatel.stockquotemanager.model.Quotes;
 
 public class StockQuoteForm {
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "{id.not.Empty}")
+	@NotNull(message = "{id.not.Null}")
 	private String id;
-	@NotEmpty
-	@NotNull
+	@NotEmpty(message = "{quotes.not.Empty}")
+	@NotNull(message = "{quotes.not.Null}")
 	Map<String, String> quotes = new HashMap<String, String>();
 
 	public Map<String, String> getQuotes() {
